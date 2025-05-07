@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ESPRIT - IA Carrière & Employabilité</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      color: #333;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      height: 60px;
+      margin-right: 15px;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      color: #c00000;
+      margin: 0;
+    }
+
+    .box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    select, textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .skills-list label {
+      margin-right: 15px;
+      display: inline-block;
+    }
+
+    button {
+      background-color: #c00000;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #a80000;
+    }
+  </style>
+
+  <script>
+    function updateProfileAndSkills() {
+      const data = 
+JSON.parse(document.getElementById("specializationData").textContent);
+      const select = document.getElementById("specialization");
+      const selected = select.value;
+      document.getElementById("profile").value = data[selected].profile;
+
+      const skillsDiv = document.getElementById("skills");
+      skillsDiv.innerHTML = "";
+
+      data[selected].skills.forEach(skill => {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "skills";
+        checkbox.value = skill;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(" " + skill));
+        skillsDiv.appendChild(label);
+      });
+    }
+
+    window.onload = updateProfileAndSkills;
+  </script>
+</head>
+<body>
+  <div class="header">
+    <img src="{{ url_for('static', filename='logo_esprit.png') }}" 
+alt="ESPRIT Logo">
+    <h1>ESPRIT - Prédiction de carrière</h1>
+  </div>
+
+  <div class="box">
+    <form method="POST">
+      <label for="specialization">Choisissez une spécialité :</label>
+      <select name="specialization" id="specialization" 
+onchange="updateProfileAndSkills()">
+        {% for name in specializations %}
+          <option value="{{ name }}" {% if name == selected_specialization 
+%}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="profile">Profil diplômé :</label>
+      <textarea name="profile" id="profile" rows="3">{{ profile 
+}}</textarea>
+
+      <label for="skills">Compétences suggérées :</label>
+      <div class="skills-list" id="skills"></div>
+
+      <button type="submit">Prédire</button>
+    </form>
+
+    {% if predictions %}
+      <div style="margin-top: 30px;">
+        <h3>🔮 Résultat :</h3>
+        <ul>
+          {% for name, prob in predictions %}
+            <li>{{ name }} – {{ prob }}%</li>
+          {% endfor %}
+        </ul>
+        {% if score %}
+          <p><strong>🎯 Score d'employabilité : {{ score 
+}}/100</strong></p>
+        {% endif %}
+        <img src="{{ url_for('static', filename='prediction_chart.png') 
+}}" style="max-width:100%; margin-top:20px;">
+      </div>
+    {% endif %}
+  </div>
+
+  <script id="specializationData" type="application/json">
+    {{ specializations | tojson }}
+  </script>
+</body>
+</html>
+
