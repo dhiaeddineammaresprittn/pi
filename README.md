@@ -13,7 +13,7 @@ Ce tableau de bord vise à aider les établissements d'enseignement à :
 
 ---
 
-## 🖥 Fonctionnalités principales
+##  Fonctionnalités principales
 
 ✅ Visualisation des taux d’admission et d’employabilité  
 ✅ Comparaison entre filières, niveaux et promotions  
