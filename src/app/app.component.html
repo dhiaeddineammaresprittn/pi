@@ -1,0 +1,32 @@
+<nz-layout>
+  <nz-sider [nzWidth]="200" [ngStyle]="{ backgroundColor: '#e60000' }">
+    <!-- Logo ESPRIT -->
+    <div class="logo" style="padding: 16px; text-align: center;">
+      <img src="assets/esprit png.png" alt="Logo ESPRIT" style="max-width: 80%; height: auto;" />
+    </div>
+
+    <!-- Menu -->
+    <ul nz-menu nzMode="inline" nzTheme="light" style="background: #e60000c0; color: white;">
+      <a nz-menu-item [routerLink]="['/admission']" routerLinkActive="active-menu">
+        Admission
+      </a>
+      <a nz-menu-item [routerLink]="['/employabilite']" routerLinkActive="active-menu">
+        Employabilité
+      </a>
+    </ul>
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header style="background: #ffffff; padding: 0; text-align: center; font-weight: bold;">
+      <h1 style="margin: 0; padding: 16px; color: #e60000c0;">Tableaux de Bord ESPRIT</h1>
+    </nz-header>
+
+    <nz-content style="margin: 24px 16px 0;">
+      <div style="padding: 24px; background: #fff; min-height: 80vh;">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+
+    <nz-footer style="text-align: center;">©2025 ESPRIT - Business Intelligence</nz-footer>
+  </nz-layout>
+</nz-layout>

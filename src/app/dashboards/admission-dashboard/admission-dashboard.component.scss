@@ -1,0 +1,39 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 800px;
+  width: 100%;
+}
+
+.dashboard-header {
+  padding: 16px;
+  background: #f9f9f9;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0 16px;
+  overflow: hidden;
+}
+
+.powerbi-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.powerbi-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  min-height: 600px;
+  max-height: 700px; // Pour forcer une taille minimale
+  min-width: none;
+  max-width: 1500px;
+}
+
